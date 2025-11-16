@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my girlfriend? 💌</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          colors: {
+            rosey: {
+              50: "#fff1f5",
+              100: "#ffe4ed",
+              500: "#fb7185",
+              600: "#e11d48",
+            },
+          },
+          animation: {
+            "float-slow": "float 4s ease-in-out infinite",
+            "pulse-soft": "pulseSoft 2.2s ease-in-out infinite",
+            "confetti": "confetti 1.2s ease-out forwards",
+          },
+          keyframes: {
+            float: {
+              "0%, 100%": { transform: "translateY(0px)" },
+              "50%": { transform: "translateY(-10px)" },
+            },
+            pulseSoft: {
+              "0%, 100%": { transform: "scale(1)" },
+              "50%": { transform: "scale(1.05)" },
+            },
+            confetti: {
+              "0%": { opacity: 1, transform: "translateY(0) rotate(0deg)" },
+              "100%": {
+                opacity: 0,
+                transform: "translateY(200px) rotate(360deg)",
+              },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    .no-escape {
+      transition: transform 0.18s ease, top 0.18s ease, left 0.18s ease;
+    }
+
+    .confetti-piece {
+      position: fixed;
+      font-size: 1.4rem;
+      pointer-events: none;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-sky-50 flex items-center justify-center px-4 py-6">
+
+  <div class="max-w-xl w-full relative">
+    <!-- floating hearts -->
+    <div class="pointer-events-none absolute -top-10 -left-4 text-4xl opacity-60 animate-float-slow">
+      💕
+    </div>
+    <div class="pointer-events-none absolute -bottom-10 -right-4 text-4xl opacity-60 animate-float-slow">
+      💘
+    </div>
+
+    <div class="bg-white/90 backdrop-blur rounded-3xl shadow-2xl border border-rose-100 px-6 py-6 sm:px-8 sm:py-8">
+      <div class="flex flex-col items-center text-center gap-4">
+        <div class="text-5xl sm:text-6xl animate-pulse-soft">
+          🐻💌🐰
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-rosey-500 font-semibold mb-2">
+            urgent, highly scientific question
+          </p>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+            Will you be my girlfriend?
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Please choose your answer carefully. There is only one <span class="font-semibold text-rosey-600">correct</span> option. 😏
+          </p>
+        </div>
+
+        <!-- Cute “reasons” list -->
+        <div class="w-full mt-4 bg-rose-50/80 border border-rose-100 rounded-2xl px-4 py-3 text-left text-sm text-slate-700">
+          <p class="font-semibold text-rosey-600 mb-2 flex items-center gap-2">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-rosey-500 text-white text-xs">1</span>
+            Scientific reasons you should say yes:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm">
+            <li>• 100% increase in shared memes per day 📱</li>
+            <li>• Unlimited hugs & emotional tech support 🤗</li>
+            <li>• Lifetime subscription to my bad jokes™ 😂</li>
+            <li>• Free upgrade to <span class="font-semibold">“cutest couple”</span> tier 💑</li>
+          </ul>
+        </div>
+
+        <!-- Question + buttons -->
+        <div class="w-full mt-4 flex flex-col items-center gap-4">
+          <p class="text-sm text-slate-700">
+            So, what do you say?
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <button
+              id="yesBtn"
+              class="px-7 py-2.5 rounded-full bg-rosey-500 hover:bg-rosey-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-rose-200 focus:outline-none focus:ring-2 focus:ring-rosey-400 focus:ring-offset-2 focus:ring-offset-rose-50 flex items-center gap-2"
+            >
+              <span>Yes, obviously 💖</span>
+            </button>
+
+            <button
+              id="noBtn"
+              class="no-escape px-6 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm sm:text-base border border-slate-200 shadow-sm relative"
+            >
+              Umm... no? 🙈
+            </button>
+          </div>
+
+          <!-- status text -->
+          <p id="statusText" class="text-xs text-slate-500 mt-1">
+            Tip: If the “No” button misbehaves, it’s a sign from the universe. 🌌
+          </p>
+        </div>
+
+        <!-- Result / confirmation -->
+        <div id="resultCard" class="hidden w-full mt-5">
+          <div class="rounded-2xl border border-emerald-100 bg-emerald-50/80 px-4 py-3 text-left text-sm text-emerald-900 flex items-start gap-3">
+            <div class="text-xl">🥹</div>
+            <div>
+              <p class="font-semibold mb-1">You chose YES. This answer is now legally binding*.</p>
+              <p class="text-xs">
+                *Terms & conditions: includes mandatory cuddles, shared snacks, and at least 1 date night per week. 💘
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const statusText = document.getElementById("statusText");
+    const resultCard = document.getElementById("resultCard");
+
+    let noClickCount = 0;
+
+    function randomPositionWithinViewport(btn) {
+      const padding = 30;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const btnRect = btn.getBoundingClientRect();
+      const maxLeft = vw - btnRect.width - padding;
+      const maxTop = vh - btnRect.height - padding;
+
+      const left = Math.max(
+        padding,
+        Math.min(maxLeft, Math.random() * (maxLeft - padding))
+      );
+      const top = Math.max(
+        padding,
+        Math.min(maxTop, Math.random() * (maxTop - padding))
+      );
+
+      btn.style.position = "fixed";
+      btn.style.left = left + "px";
+      btn.style.top = top + "px";
+    }
+
+    function updateStatus() {
+      const messages = [
+        "Hmm, that button seems broken... maybe try the other one? 👀",
+        "The universe keeps redirecting you to 'Yes'. Suspicious. 🤔",
+        "At this point, saying yes is just following instructions. 😌",
+        "Fine, I'll stop the No button soon, but you know what to do. 💖"
+      ];
+      statusText.textContent = messages[Math.min(noClickCount, messages.length - 1)];
+    }
+
+    noBtn.addEventListener("mouseenter", () => {
+      noClickCount++;
+      randomPositionWithinViewport(noBtn);
+      updateStatus();
+
+      if (noClickCount > 4) {
+        noBtn.textContent = "Okay fine, I pick YES 😅";
+      }
+    });
+
+    noBtn.addEventListener("click", (e) => {
+      noClickCount++;
+      randomPositionWithinViewport(noBtn);
+      updateStatus();
+      e.preventDefault();
+    });
+
+    function spawnConfetti() {
+      const emojis = ["💖", "💘", "💝", "✨", "💕", "🥰"];
+      for (let i = 0; i < 40; i++) {
+        const span = document.createElement("span");
+        span.className = "confetti-piece animate-confetti";
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        const startX = Math.random() * window.innerWidth;
+        const startY = -20 + Math.random() * 40;
+
+        span.style.left = startX + "px";
+        span.style.top = startY + "px";
+
+        document.body.appendChild(span);
+
+        span.addEventListener("animationend", () => {
+          span.remove();
+        });
+      }
+    }
+
+    yesBtn.addEventListener("click", () => {
+      spawnConfetti();
+      resultCard.classList.remove("hidden");
+      yesBtn.disabled = true;
+      noBtn.style.display = "none";
+      statusText.textContent = "Answer locked in. You are officially my favorite human. 💑";
+      yesBtn.textContent = "Yay! 💞";
+    });
+  </script>
+</body>
+</html>
